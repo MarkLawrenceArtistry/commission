@@ -4,6 +4,7 @@ import { Routes, Route, Link } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
+import CheckSession from './pages/CheckSession'
 
 function App() {
     return (
@@ -13,6 +14,8 @@ function App() {
                     <Link to="/">Login</Link>
                     <span style={{ margin: '0 10px' }}>|</span>
                     <Link to="/dashboard">Dashboard</Link>
+                    <span style={{ margin: '0 10px' }}>|</span>
+                    <Link to="/check">Check Session</Link>
                 </nav>
 
                 <Routes>
@@ -21,6 +24,8 @@ function App() {
                     
                     {/* If the URL is "/Dashboard", show the Dashboard component */}
                     <Route path="/dashboard" element={<Dashboard />} />
+
+                    <Route path="/check" element={<CheckSession />} />
 
                     {/* You can also add a "Catch-all" for 404 Not Found pages */}
                     <Route path="*" element={<NotFound />} />

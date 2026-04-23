@@ -11,7 +11,7 @@ export const updateSale = async (data, user_id) => {
 }
 
 export const getAllSales = async (user_id) => {
-    const response = await api.get(`/sales/${user_id}`, data)
+    const response = await api.get(`/sales/${user_id}`)
     return response.data
 }
 
