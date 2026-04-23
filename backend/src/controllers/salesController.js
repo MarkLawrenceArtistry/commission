@@ -122,6 +122,14 @@ const deleteSale = async (req, res) => {
 
 const dashboardKpi = async (req, res) => {
     try {
+        let { user_id  } = req.body
+         // Check if user exists
+        const user = await get(`SELECT * FROM users WHERE id = ?`, [user_id]);
+        
+        if (!user) {
+            return res.status(401).json({ success: false, message: "Invalid user." });
+        }
+
         const totalSales = await get(`SELECT SUM(amount) FROM sales`)
         const totalAvgSales = await get(`SELECT AVG(amount) FROM sales`)
 
