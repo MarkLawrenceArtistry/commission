@@ -21,6 +21,7 @@ export const deleteSale = async (sale_id, user_id) => {
 }
 
 export const getDashboardKpi = async (user_id) => {
-    const response = await api.get(`/dashboard/kpi`, user_id)
+    console.log("sale service: " + user_id)
+    const response = await api.get(`/sales/dashboard/kpi`, user_id)
     return response.data
 }
