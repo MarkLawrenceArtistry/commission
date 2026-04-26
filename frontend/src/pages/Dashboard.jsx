@@ -12,10 +12,9 @@ export default function Dashboard() {
     useEffect(() => {
         async function fetchData() {
             try {
-                console.log(user)
-                const result = await getDashboardKpi('1')
+                const result = await getDashboardKpi()
                 if(result) {
-                    setKpi(result)
+                    setKpi(result.data)
                 }
             } catch(err) {
                 console.error(err.message)
@@ -34,6 +33,7 @@ export default function Dashboard() {
     }
 
     if(loading) return <p>Loading...</p>
+    console.log(kpi)
 
     return (
         <div>
@@ -42,19 +42,18 @@ export default function Dashboard() {
             <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
         
                 <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px' }}>
-                <h3>Total Sales</h3>
-                {/* Note: SQLite SUM() returns an object key like "SUM(amount)". We handle it safely. */}
-                <p>${kpi?.totalSales?.['SUM(amount)'] || 0}</p>
+                    <h3>Total Sales</h3>
+                    <p>{kpi.totalSales["SUM(amount)"]}</p>
                 </div>
 
                 <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px' }}>
-                <h3>Average Sale</h3>
-                <p>${kpi?.totalAvgSales?.['AVG(amount)']?.toFixed(2) || 0}</p>
+                    <h3>Average Sale</h3>
+                    <p>{kpi.totalAvgSales['AVG(amount)']}</p>
                 </div>
 
                 <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px' }}>
-                <h3>This Month</h3>
-                <p>${kpi?.totalSalesThisMonth?.total || 0}</p>
+                    <h3>This Month</h3>
+                    <p>{kpi.totalSalesThisMonth.total ? kpi.totalSalesThisMonth.total : 0}</p>
                 </div>
 
             </div>

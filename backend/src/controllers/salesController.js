@@ -94,7 +94,7 @@ const updateSale = async (req, res) => {
 const deleteSale = async (req, res) => {
     try {
         const { id } = req.params
-        let { user_id  } = req.body
+        let user_id = req.user.id
 
         // Check if user exists
         const user = await get(`SELECT * FROM users WHERE id = ?`, [user_id]);
@@ -122,7 +122,7 @@ const deleteSale = async (req, res) => {
 
 const dashboardKpi = async (req, res) => {
     try {
-        let { user_id } = req.body
+        let user_id = req.user.id
         
         // Check if user exists
         const user = await get(`SELECT * FROM users WHERE id = ?`, [user_id]);

@@ -15,13 +15,12 @@ export const getAllSales = async (user_id) => {
     return response.data
 }
 
-export const deleteSale = async (sale_id, user_id) => {
-    const response = await api.delete(`/sales/${sale_id}`, user_id)
+export const deleteSale = async (sale_id) => {
+    const response = await api.delete(`/sales/${sale_id}`)
     return response.data
 }
 
-export const getDashboardKpi = async (user_id) => {
-    console.log("sale service: " + user_id)
-    const response = await api.get(`/sales/dashboard/kpi`, user_id)
+export const getDashboardKpi = async () => {
+    const response = await api.get(`/sales/dashboard/kpi`)
     return response.data
 }
