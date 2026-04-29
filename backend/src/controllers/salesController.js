@@ -3,13 +3,13 @@ const { run, all, get } = require('../utils/helper');
 
 const getAllSales = async (req, res) => {
     try {
-        const { id } = req.params
+        const { user_id } = req.params
 
         const query = `
             SELECT id, amount, description, date FROM sales
-            WHERE id = ?
+            WHERE user_id = ?
         `
-        const params = [id]
+        const params = [user_id]
 
         const result = await all(query, params)
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "../contexts/AuthContext"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { getDashboardKpi } from "../services/salesService"
 
 export default function Dashboard() {
@@ -58,6 +58,11 @@ export default function Dashboard() {
 
             </div>
 
+            <div>
+                <Link to="/sales">
+                    <button>Sales Page</button>
+                </Link>
+            </div>
             <button onClick={handleLogout}>Logout</button>
         </div>
     )

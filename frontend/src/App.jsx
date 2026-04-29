@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 import CheckSession from './pages/CheckSession'
+import Sales from './pages/Sales'
 
 function App() {
     return (
@@ -23,6 +24,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <Dashboard />
+                            </ProtectedRoute>
+                        } 
+                    />
+
+                    <Route path="/sales" 
+                        element={
+                            <ProtectedRoute>
+                                <Sales />
                             </ProtectedRoute>
                         } 
                     />
