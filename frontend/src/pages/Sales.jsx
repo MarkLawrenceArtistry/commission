@@ -1,34 +1,36 @@
 import { useState, useEffect } from "react";
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate, Link } from "react-router-dom"
 import { createSale, getAllSales } from "../services/salesService";
 
 export default function Sales() {
-    const { user } = useAuth()
+    const { logoutSession, user } = useAuth()
+    const navigate = useNavigate()
 
     const [salesList, setSalesList] = useState([])
     const [sale, setSale] = useState({user_id: '', amount: '', description: ''})
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        async function fetchSales() {
-            try {
-                const result = await getAllSales(user.id)
-
-                if(result) {
-                    setSalesList(Array.isArray(result.data) ? result.data : [])
-                }
-
-                console.log(result)
-            } catch(err) {
-                console.error("Error fetching sales: ", err.message)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        // fetchSales()
+        fetchSales()
         console.log(user)
     }, [])
+
+    async function fetchSales() {
+        try {
+            const result = await getAllSales(user.id)
+
+            if(result) {
+                setSalesList(Array.isArray(result.data) ? result.data : [])
+            }
+
+            console.log(result)
+        } catch(err) {
+            console.error("Error fetching sales: ", err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -36,8 +38,8 @@ export default function Sales() {
         try {
             const newSaleData = {
                 user_id: user.id,
-                amount: amount,
-                description: description
+                amount: sale.amount,
+                description: sale.description
             }
 
             const response = await createSale(newSaleData)
@@ -54,13 +56,18 @@ export default function Sales() {
         }
     }
 
+    const handleLogout = () => {
+        logoutSession();
+        navigate('/login')
+    }
+
     if(loading) return <p>Loading sales data...</p>
 
     return (
         <div>
             <h1>Manage Sales</h1>
 
-            {/* <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <h3>Add New Sale</h3>
 
                 <div>
@@ -91,7 +98,7 @@ export default function Sales() {
                 <br />
 
                 <button type="submit">Submit</button>
-            </form> */}
+            </form>
 
             <hr />
 
@@ -107,21 +114,25 @@ export default function Sales() {
                 </thead>
                 <tbody>
                     {salesList.length === 0 ? (
-                        <tr colSpan="4" style={{ textAlign: 'center' }}>
+                        <td colSpan="4" style={{ textAlign: 'center' }}>
                             <td>No sales found. Add one above!</td>
-                        </tr>
+                        </td>
                     ) : (
-                        salesList.map((sale) => {
+                        salesList.map((sale) => (
                             <tr key={sale.id}>
                                 <td>{sale.id}</td>
                                 <td>{sale.amount}</td>
                                 <td>{sale.description}</td>
                                 <td>{sale.date}</td>
                             </tr>
-                        })
+                        ))
                     )}
                 </tbody>
             </table>
+
+            <button onClick={() => navigate('/dashboard')}>Go to Dashboard</button>
+            <button onClick={handleLogout}>Logout</button>
+
         </div>
     )
 }

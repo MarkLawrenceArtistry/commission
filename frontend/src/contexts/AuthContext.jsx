@@ -8,18 +8,21 @@ export const useAuth = () => {
 
 export function AuthProvider({ children }) {
     const existingToken = localStorage.getItem('token')
+    const existingUser = JSON.parse(localStorage.getItem('user')) || null
 
     const [token, setToken] = useState(existingToken)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(existingUser)
 
     const loginSession = (newToken, userData) => {
         localStorage.setItem('token', newToken)
+        localStorage.setItem('user', JSON.stringify(userData))
         setToken(newToken)
         setUser(userData)
     }
 
     const logoutSession = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('user') // Clear user from memory
         setToken(null)
         setUser(null)
     }
